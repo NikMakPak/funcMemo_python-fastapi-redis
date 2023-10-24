@@ -1,6 +1,12 @@
 import socket
 import pickle
 
+def print_transactions(transactions):
+    print(f"{'transaction_hash':<20} {'logger':<10} {'amount':<10} {'timestamp':<10}")
+    for transaction in transactions:
+        transaction_hash, logger, amount, timestamp = transaction
+        print(f"{transaction_hash:<20} {logger:<10} {amount:<10} {timestamp:<10}")
+
 def auth():
     while True:
         port = int(input("Введите ваш логин (5 цифр) "))
@@ -23,7 +29,8 @@ def start_client():
         data += packet
     sock.close()
     transactions = pickle.loads(data)
-    print(f"Received {len(transactions)} transactions")
+    print(f"Received {len(transactions)} transactions for id #{client_port}")
+    print_transactions(transactions[:5])
 
 if __name__ == "__main__":
     start_client()

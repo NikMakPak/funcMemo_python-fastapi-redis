@@ -13,7 +13,7 @@ def create_db(rows):
                     logger TEXT,
                     amount REAL,
                     timestamp INTEGER)''')
-    senders = ['45451', '12345', '99900']
+    senders = ['33344', '12345', '11122']
     for _ in range(rows):
         transaction_hash = '0x' + ''.join(random.choices(string.ascii_letters + string.digits, k=18))
         sender = '0x' + random.choice(senders) + ''.join(random.choices(string.ascii_letters, k=6))
@@ -39,5 +39,5 @@ def read_db(limit):
     for row in rows:
         print(row)
 
-# create_db(200_000)
+create_db(200_000)
 read_db(10)

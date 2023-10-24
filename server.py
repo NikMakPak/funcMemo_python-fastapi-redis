@@ -9,8 +9,8 @@ DB_NAME = 'transactions.db'
 HOST = 'localhost'
 PORT = 10000
 
+
 def get_transactions_by_id(id):
-    print(id)
     connection = sqlite3.connect(DB_NAME)  # Замените 'your_database.db' на путь к вашей базе данных SQLite
     cursor = connection.cursor()
 
@@ -29,7 +29,7 @@ def get_transactions_by_id(id):
     sqlite_time = time.time() - start_time
     print(f"sqlite timecost: {round(sqlite_time,4)}")
     # ex in seconds
-    redis_client.set(id, result, ex=30)
+    redis_client.set(id, result, ex=60)
 
     redis_client.close()
     connection.close()
@@ -43,7 +43,7 @@ def start_server():
     
     while True:
         conn, addr = server.accept()
-        print(f"New connection from {addr}")
+        print(f"new request from id #{addr[1]}")
         client_id = addr[1]
         result = get_transactions_by_id(client_id)
         conn.sendall(result)
